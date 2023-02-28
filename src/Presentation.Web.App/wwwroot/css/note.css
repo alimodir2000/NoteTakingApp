@@ -1,0 +1,79 @@
+﻿body {
+    background-color: #f2f2f2;
+    font-family: sans-serif;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    height: 100vh;
+}
+
+.note {
+    background-color: #ffffff;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+}
+
+.note-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.delete-button {
+    color: #777777;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.title {
+    color: #777777;
+    font-size: 14px;
+}
+
+.note-text {
+    flex: 1;
+    font-size: 16px;
+    word-wrap: break-word;
+}
+
+.create-note-button {
+    background-color: #ffffff;
+    color: #777777;
+    font-size: 18px;
+    border: 1px solid #777777;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+    .create-note-button:hover {
+        background-color: #777777;
+        color: #ffffff;
+    }
+
+.note:focus {
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+    z-index: 1;
+    border: 2px solid black;
+}
+
+    .note:focus .note-text {
+        outline: none;
+    }
