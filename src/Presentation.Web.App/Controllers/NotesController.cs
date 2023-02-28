@@ -12,34 +12,27 @@ using System.Threading.Tasks;
 
 namespace Presentation.Web.App.Controllers;
 
+/// <summary>
+/// Note Controller class
+/// all CRUD operations related to the note implemented in this class. 
+/// UI (index view) makes ajax call to APIs defined here
+/// The logic is pretty simple: the api uses Mediator and send appropriate command request.
+/// This request will handle by its handler that defined in Application
+/// </summary>
+
+
 [ApiController]
 [Route("api/[controller]")]
-public class NotesController : ControllerBase
+public class NotesController : BaseController
 {
-    private ISender? _mediator;
-    protected ISender Mediator => _mediator ??= HttpContext.RequestServices.GetRequiredService<ISender>();
 
-    //[HttpGet]
-    //public async Task<ActionResult<IEnumerable<Note>>> GetNotes()
-    //{
-    //    return await _context.Notes.ToListAsync();
-    //}
-
-    //[HttpGet("{id}")]
-    //public async Task<ActionResult<Note>> GetNoteById(int id)
-    //{
-    //    var note = await _context.Notes.FindAsync(id);
-
-    //    if (note == null)
-    //    {
-    //        return NotFound();
-    //    }
-
-    //    return note;
-    //}
-
+    /// <summary>
+    /// Create new note
+    /// Fires CreateNoteCommand and send back new note to caller
+    /// </summary>
+    /// <returns>NoteBriefDto</returns>
     [HttpPost]
-    public async Task<ActionResult<Note>> CreateNote()
+    public async Task<ActionResult<NoteBriefDto>> CreateNote()
     {
         var title = DateTime.Now.ToShortTimeString();
 
@@ -48,9 +41,9 @@ public class NotesController : ControllerBase
             Title = title
         };
 
-       var noteId = await Mediator.Send(createNoteCommand);
+        var noteId = await Mediator.Send(createNoteCommand);
 
-        var note = new Note
+        var note = new NoteBriefDto
         {
             Id = noteId,
             Title = title,
@@ -59,15 +52,21 @@ public class NotesController : ControllerBase
 
         return note;
     }
+    /// <summary>
+    /// Update note by its id
+    /// </summary>
+    /// <param name="id">The id of the note to be updated</param>
+    /// <param name="note">Note parametes to be updated</param>
+    /// <returns>NoContent</returns>
 
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateNote(int id, [FromBody] NoteBriefDto note)
     {
-        
+
         var updateCommand = new UpdateNoteCommand()
         {
             Id = id,
-            Body = note.NoteBody,  
+            Body = note.NoteBody,
             Title = DateTime.Now.ToShortTimeString()
         };
 
@@ -76,6 +75,12 @@ public class NotesController : ControllerBase
 
         return NoContent();
     }
+
+    /// <summary>
+    /// Delete note by its id
+    /// </summary>
+    /// <param name="id">The id of note to be deleted!</param>
+    /// <returns>NoContent</returns>
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteNoteById(int id)
@@ -86,9 +91,5 @@ public class NotesController : ControllerBase
         return NoContent();
     }
 
-    //private bool NoteExists(int id)
-    //{
-    //    return _context.Notes.Any(n => n.Id == id);
-    //}
 }
 
