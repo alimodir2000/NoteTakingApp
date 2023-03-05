@@ -11,6 +11,16 @@ public static class ConfigureServices
 {
     public static IServiceCollection AddPresentationWebApiServices(this IServiceCollection services)
     {
+        services.AddAuthentication("Bearer")
+            .AddJwtBearer("Bearer", options =>
+            {
+                options.Authority = "http://localhost:5000";
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateAudience = false
+                };
+            });
         services.AddHttpContextAccessor();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         return services;

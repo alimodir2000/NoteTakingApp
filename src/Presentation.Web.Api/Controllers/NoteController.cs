@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NoteTakingAppSolution.Application.Common.Models;
 using NoteTakingAppSolution.Application.Notes.Commands.CreateNote;
 using NoteTakingAppSolution.Application.Notes.Commands.DeleteNote;
@@ -17,6 +18,7 @@ namespace Presentation.Web.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class NoteController : ApiBaseController
 {
     /// <summary>

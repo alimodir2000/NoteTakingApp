@@ -11,7 +11,6 @@ public partial class Program
         builder.Services.AddIdentityServer()
             .AddDeveloperSigningCredential()
             .AddInMemoryApiScopes(Config.GetAllScopes())
-            .AddInMemoryApiResources(Config.GetAllApiResources())
             .AddInMemoryClients(Config.GetAllApiClients());
 
         var app = builder.Build();

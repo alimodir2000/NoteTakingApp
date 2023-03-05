@@ -36,6 +36,7 @@ public partial class Program
 
         // Configure the HTTP request pipeline.
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
 
